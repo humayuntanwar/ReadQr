@@ -46,6 +46,8 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
         lengthMap.put("58","COUNTRY CODE");
         lengthMap.put("59","MERCHANT NAME");
         lengthMap.put("60","MERCHANT CITY");
+        lengthMap.put("63","CRC");
+
 
 
 
@@ -176,6 +178,18 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
         int vallen60= tag60.length() +len60.length() + val60.length();
 
 
+        //HANDLING 63 WHICH COMES AFTER 60 IN OUR TEST EMVQR
+
+        int startlen63 = startlen60 + vallen60; // 60 IS MERCHANT CITY
+        String tag63 = resultString.substring(startlen63, startlen63+2);
+        String len63= resultString.substring(startlen63+2,startlen63+4);
+        int lenof63 = Integer.parseInt(len63);
+        String tagmap63 = lengthMap.get(tag63);
+        String val63= resultString.substring(startlen63+4,lenof63+startlen63+4);// MERCHANT CITY
+        int vallen63= tag63.length() +len63.length() + val63.length();
+
+
+
 
 
 
@@ -201,7 +215,9 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
                                          + "\n" + tag54+ "\nindicates  "+tagmap54+"\n value is : "+ val54
                                          + "\n" + tag58+ "\nindicates  "+tagmap58+"\n value is : "+ val58
                                         + "\n" + tag59+ "\nindicates  "+tagmap59+"\n value is : "+ val59
-                                         + "\n" + tag60+ "\nindicates  "+tagmap60+"\n value is : "+ val60) ;
+                                         + "\n" + tag60+ "\nindicates  "+tagmap60+"\n value is : "+ val60
+                                            + "\n" + tag63+ "\nindicates  "+tagmap63+"\n value is : "+ val63
+        ) ;
         onBackPressed();
 
 
