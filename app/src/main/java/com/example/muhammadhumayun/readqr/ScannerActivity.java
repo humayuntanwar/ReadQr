@@ -40,7 +40,7 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
 
 
 
-        lengthMap.put("52","MCC");
+        lengthMap.put("52","MERCHANT CATEGORY CODE");
         lengthMap.put("53","CURRENCY CODE");
         lengthMap.put("54","TRANSACTIONAL AMOUNT");
         lengthMap.put("58","COUNTRY CODE");
@@ -83,7 +83,7 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
 
 
         //handling string result tag two
-        int startlen2 =  vallen1 ;
+        int startlen2 =  vallen1 ; // 2 BELONGS POINT INITIATION METHOD
         String tag2 = resultString.substring(startlen2, startlen2+2);
         String len2 = resultString.substring(startlen2+2,startlen2+4);
         int lenof2 = len2.length();
@@ -93,7 +93,7 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
 
 
         //handling starting result tag three
-        int startlen3 =  vallen2 +startlen2;
+        int startlen3 =  vallen2 +startlen2; //3 BELONGS TO MASTERS
         String tag3 = resultString.substring(startlen3, startlen3+2);
         String len3 = resultString.substring(startlen3+2,startlen3+4);
         int lenof3 = Integer.parseInt(len3);
@@ -105,7 +105,7 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
 
 
         //handling starting result tag four
-        int startlen4 =  vallen3 + startlen3;
+        int startlen4 =  vallen3 + startlen3; // 4 BELONGS TO MASTERS
         String tag4 = resultString.substring(startlen4, startlen4+2);
         String len4 = resultString.substring(startlen4+2,startlen4+4);
         int lenof4 = Integer.parseInt(len4);
@@ -116,19 +116,13 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
 
         //lets now skip the merchant tags and go directly to handle 52
 
-        int startlen52 = vallen4+76;
+        int startlen52 = startlen4 + vallen4+76; // 52 IS MCC // 76 chars from string skipped to reach 52
         String tag52 = resultString.substring(startlen52, startlen52+2);
         String len52= resultString.substring(startlen52+2,startlen52+4);
         int lenof52 = Integer.parseInt(len52);
         String tagmap52 = lengthMap.get(tag52);
         String val52= resultString.substring(startlen52+4,lenof52+startlen52+4);// amount
         int vallen52= tag52.length() +len52.length() + val52.length();
-
-
-
-
-
-
 
 
 
