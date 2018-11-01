@@ -143,6 +143,32 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
         int vallen54= tag54.length() +len54.length() + val54.length();
 
 
+        //HANDLING 58 , IN OUR TEST EMV QR IS COMES AFTER 54
+
+        int startlen58 = startlen54 + vallen54; // 58 IS COUNTRY CODE
+        String tag58 = resultString.substring(startlen58, startlen58+2);
+        String len58= resultString.substring(startlen58+2,startlen58+4);
+        int lenof58 = Integer.parseInt(len58);
+        String tagmap58 = lengthMap.get(tag58);
+        String val58= resultString.substring(startlen58+4,lenof58+startlen58+4);// COUNTRY CODE
+        int vallen58= tag58.length() +len58.length() + val58.length();
+
+
+        //HANDLING 59 , IN OUR TEST EMVQR IS COMES AFTER 58
+
+        int startlen59 = startlen58 + vallen58; // 59 IS MERCHANT NAME
+        String tag59 = resultString.substring(startlen59, startlen59+2);
+        String len59= resultString.substring(startlen59+2,startlen59+4);
+        int lenof59 = Integer.parseInt(len59);
+        String tagmap59 = lengthMap.get(tag59);
+        String val59= resultString.substring(startlen59+4,lenof59+startlen59+4);// MERCHANT NAME
+        int vallen59= tag59.length() +len59.length() + val59.length();
+
+
+
+
+
+
 
 
 
@@ -159,7 +185,9 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
                                         +"\n"+tag4 + "\n indicates    "+tagmap4 +"\n value is : " + val4
                                         +"\n"+tag52 + "\n indicates  "+tagmap52 + "\n value is : "+val52
                                         + "\n" + tag53+ "\nindicates  "+tagmap53+"\n value is : "+ val53
-                                         + "\n" + tag54+ "\nindicates  "+tagmap54+"\n value is : "+ val54) ;
+                                         + "\n" + tag54+ "\nindicates  "+tagmap54+"\n value is : "+ val54
+                                         + "\n" + tag58+ "\nindicates  "+tagmap58+"\n value is : "+ val58
+                                        + "\n" + tag59+ "\nindicates  "+tagmap59+"\n value is : "+ val59  ) ;
         onBackPressed();
 
 
