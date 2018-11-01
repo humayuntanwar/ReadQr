@@ -133,6 +133,16 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
         String val53= resultString.substring(startlen53+4,lenof53+startlen53+4);// amount
         int vallen53= tag53.length() +len53.length() + val53.length();
 
+        //HANDLING 54
+        int startlen54 = startlen53 + vallen53; // 53 IS CURRENCY CODE
+        String tag54 = resultString.substring(startlen54, startlen54+2);
+        String len54= resultString.substring(startlen54+2,startlen54+4);
+        int lenof54 = Integer.parseInt(len54);
+        String tagmap54 = lengthMap.get(tag54);
+        String val54= resultString.substring(startlen54+4,lenof54+startlen54+4);// amount
+        int vallen54= tag54.length() +len54.length() + val54.length();
+
+
 
 
 
@@ -148,7 +158,8 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
                                        + "\n" + tag3 +"\n indicates  "+ tagmap3 + "\nvalue is : "+val3
                                         +"\n"+tag4 + "\n indicates    "+tagmap4 +"\n value is : " + val4
                                         +"\n"+tag52 + "\n indicates  "+tagmap52 + "\n value is : "+val52
-                                        + "\n" + tag53+ "\nindicates  "+tagmap53+"\n value is : "+ val53) ;
+                                        + "\n" + tag53+ "\nindicates  "+tagmap53+"\n value is : "+ val53
+                                         + "\n" + tag54+ "\nindicates  "+tagmap54+"\n value is : "+ val54) ;
         onBackPressed();
 
 
