@@ -9,6 +9,15 @@
 
     tools:context="com.example.muhammadhumayun.readqr.MainActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
     <TextView
         android:id="@+id/tv_code_text"
         android:layout_width="match_parent"
@@ -24,5 +33,7 @@
         android:text="Start scan"
         android:layout_below="@+id/tv_code_text"
         />
+        </LinearLayout>
 
+    </ScrollView>
 </RelativeLayout>

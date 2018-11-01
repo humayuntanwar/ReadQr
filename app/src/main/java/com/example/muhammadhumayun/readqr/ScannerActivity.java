@@ -165,6 +165,19 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
         int vallen59= tag59.length() +len59.length() + val59.length();
 
 
+        //HANDLING 60 , IN OUR TEST EMVQR IS COMES AFTER 59
+
+        int startlen60 = startlen59 + vallen59; // 60 IS MERCHANT CITY
+        String tag60 = resultString.substring(startlen60, startlen60+2);
+        String len60= resultString.substring(startlen60+2,startlen60+4);
+        int lenof60 = Integer.parseInt(len60);
+        String tagmap60 = lengthMap.get(tag60);
+        String val60= resultString.substring(startlen60+4,lenof60+startlen60+4);// MERCHANT CITY
+        int vallen60= tag60.length() +len60.length() + val60.length();
+
+
+
+
 
 
 
@@ -187,7 +200,8 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
                                         + "\n" + tag53+ "\nindicates  "+tagmap53+"\n value is : "+ val53
                                          + "\n" + tag54+ "\nindicates  "+tagmap54+"\n value is : "+ val54
                                          + "\n" + tag58+ "\nindicates  "+tagmap58+"\n value is : "+ val58
-                                        + "\n" + tag59+ "\nindicates  "+tagmap59+"\n value is : "+ val59  ) ;
+                                        + "\n" + tag59+ "\nindicates  "+tagmap59+"\n value is : "+ val59
+                                         + "\n" + tag60+ "\nindicates  "+tagmap60+"\n value is : "+ val60) ;
         onBackPressed();
 
 
