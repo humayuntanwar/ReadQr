@@ -374,4 +374,14 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
     public String firstTwo(String str) {
         return str.length() < 2 ? str : str.substring(0, 2);
     }
+
+
+    public void readEMVQR(String str){
+
+    }
+    public void readMerchantString(){
+
+    }
+
+
 }
