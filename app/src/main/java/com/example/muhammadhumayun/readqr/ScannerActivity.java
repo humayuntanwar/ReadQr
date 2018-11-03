@@ -133,7 +133,7 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
         String len4 = resultString.substring(startlen4+2,startlen4+4);
         int lenof4 = Integer.parseInt(len4);
         String tagmap4 = lengthMap.get(tag4);
-        String val4 = resultString.substring(startlen4+4,lenof4+startlen4+4);// is either 12 dynamic QR , 11 static QR
+        String val4 = resultString.substring(startlen4+4,lenof4+startlen4+4);// belongs to the merchant
         int vallen4 = tag4.length() +len4.length() + val4.length();
 
 
@@ -147,7 +147,7 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
         String lenms0 = merchantString.substring(mslen0+2,mslen0+4);
         int lenofms0 = Integer.parseInt(lenms0);
         String tagmapms0 = lengthMap.get(tagms0);
-        String valms0 = merchantString.substring(mslen0+4,lenofms0+mslen0+4);// is either 12 dynamic QR , 11 static QR
+        String valms0 = merchantString.substring(mslen0+4,lenofms0+mslen0+4);// handling part one of the merchant string
         int vallenms0 = tagms0.length() +lenms0.length() + valms0.length();
 
         //handling the merchant string part 01
@@ -156,7 +156,7 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
         String lenms01 = merchantString.substring(mslen1+2,mslen1+4);
         int lenofms01 = Integer.parseInt(lenms01);
         String tagmapms01 = lengthMap.get(tagms01);
-        String valms01 = merchantString.substring(mslen1+4,lenofms01+mslen1+4);// is either 12 dynamic QR , 11 static QR
+        String valms01 = merchantString.substring(mslen1+4,lenofms01+mslen1+4);// handling part two of merchant string
         int vallenms01 = tagms01.length() +tagms01.length() + valms01.length();
 
 
@@ -167,12 +167,12 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
 
 
         //handling starting result tag 05
-        int startlen5 =  startlen4 + vallen4; //3 BELONGS TO MASTERS
+        int startlen5 =  startlen4 + vallen4; // BELONGS TO Merchant
         String tag5 = resultString.substring(startlen5, startlen5+2);
         String len5 = resultString.substring(startlen5+2,startlen5+4);
         int lenof5 = Integer.parseInt(len5)     /*      *2 */ ; //THE LENGTH OF VALUE IS 2 TIMES THE GIVEN LENGTH, ERROR IN THE 1LINK CODE
         String tagmap5 = lengthMap.get(tag5);
-        String val5= resultString.substring(startlen5+4,lenof5+startlen5+4);// is either 12 dynamic QR , 11 static QR
+        String val5= resultString.substring(startlen5+4,lenof5+startlen5+4);// merchant code string 2
         int vallen5= tag5.length() +len5.length() + val5.length();
        // String view = tag3+val3+len3;
 
@@ -189,7 +189,7 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
         String lenms20 = merchantString2.substring(ms2len0+2,ms2len0+4);
         int lenofms20 = Integer.parseInt(lenms20);
         String tagmapms20 = lengthMap.get(tagms20);
-        String valms20 = merchantString2.substring(ms2len0+4,lenofms20+ms2len0+4);// is either 12 dynamic QR , 11 static QR
+        String valms20 = merchantString2.substring(ms2len0+4,lenofms20+ms2len0+4);// handling part one of the merchant string
         int vallenms20 = tagms20.length() +lenms20.length() + valms20.length();
 
         //handling the merchant string part 01
@@ -198,7 +198,7 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
         String lenms201 = merchantString2.substring(ms2len1+2,ms2len1+4);
         int lenofms201 = Integer.parseInt(lenms201) ;
         String tagmapms201 = lengthMap.get(tagms201);
-        String valms201 = merchantString2.substring(ms2len1+4,lenofms201+ms2len1+4);// is either 12 dynamic QR , 11 static QR
+        String valms201 = merchantString2.substring(ms2len1+4,lenofms201+ms2len1+4);// handling part two of the merchant string
         int vallenms201 = lenms201.length() +tagms201.length() + valms201.length();
 
 
@@ -286,11 +286,11 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
         String len53= resultString.substring(startlen53+2,startlen53+4);
         int lenof53 = Integer.parseInt(len53);
         String tagmap53 = lengthMap.get(tag53);
-        String val53= resultString.substring(startlen53+4,lenof53+startlen53+4);// amount
+        String val53= resultString.substring(startlen53+4,lenof53+startlen53+4);// currency code
         int vallen53= tag53.length() +len53.length() + val53.length();
 
         //HANDLING 54
-        int startlen54 = startlen53 + vallen53; // 53 IS CURRENCY CODE
+        int startlen54 = startlen53 + vallen53; // 54 IS  TRANSACTION AMOUNT
         String tag54 = resultString.substring(startlen54, startlen54+2);
         String len54= resultString.substring(startlen54+2,startlen54+4);
         int lenof54 = Integer.parseInt(len54);
