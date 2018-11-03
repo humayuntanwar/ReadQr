@@ -96,18 +96,18 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
         int lenof1 = len1.length();
         String tagmap1 = lengthMap.get(tag1);
         String val1 = resultString.substring(startlen1+4,lenof1+startlen1+4);// is either 12 dynamic QR , 11 static QR
-        int vallen1 = tag1.length() +lenof1 + val1.length();
+        int vallen1 = tag1.length() +len1.length() + val1.length();
 
 
 
         //handling string result tag 04
-        int startlen4 =  vallen1 ; // 2 BELONGS POINT INITIATION METHOD
+        int startlen4 = startlen1+ vallen1 ; // 2 BELONGS POINT INITIATION METHOD
         String tag4 = resultString.substring(startlen4, startlen4+2);
         String len4 = resultString.substring(startlen4+2,startlen4+4);
-        int lenof4 = len4.length();
+        int lenof4 = Integer.parseInt(len4);
         String tagmap4 = lengthMap.get(tag4);
         String val4 = resultString.substring(startlen4+4,lenof4+startlen4+4);// is either 12 dynamic QR , 11 static QR
-        int vallen4 = tag4.length() +lenof4 + val4.length();
+        int vallen4 = tag4.length() +len4.length() + val4.length();
 
 
 
@@ -115,7 +115,7 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
 
 
         //handling starting result tag 05
-        int startlen5 =  vallen4 +startlen4; //3 BELONGS TO MASTERS
+        int startlen5 =  startlen4 + vallen4; //3 BELONGS TO MASTERS
         String tag5 = resultString.substring(startlen5, startlen5+2);
         String len5 = resultString.substring(startlen5+2,startlen5+4);
         int lenof5 = Integer.parseInt(len5)     /*      *2 */ ; //THE LENGTH OF VALUE IS 2 TIMES THE GIVEN LENGTH, ERROR IN THE 1LINK CODE
@@ -128,36 +128,10 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
 
         //handling starting result tag 06
         //change all the value onwards to 06..07..08..09
-        int startlen4 =  vallen3 + startlen3; // 4 BELONGS TO MASTERS
-        String tag4 = resultString.substring(startlen4, startlen4+2);
-        String len4 = resultString.substring(startlen4+2,startlen4+4);
-        int lenof4 = Integer.parseInt(len4)  /*  +2 */ ; // THE LENGTH OF VALUE IS 2 CHAR LESS THEN THE ACTUAL LENGTH OF VALUE
-        String tagmap4 = lengthMap.get(tag4);
-        String val4= resultString.substring(startlen4+4,lenof4+startlen4+4);// mercchant account number
-        int vallen4= tag4.length() +len4.length() + val4.length();
-
-
-
-
-
-
-        //handling starting result tag five
-        int startlen5 =  vallen4 + startlen4; // 4 BELONGS TO MASTERS
-        String tag5 = resultString.substring(startlen5, startlen5+2);
-        String len5 = resultString.substring(startlen5+2,startlen5+4);
-        int lenof5 = Integer.parseInt(len5)      ; // THE LENGTH OF VALUE IS 2 CHAR LESS THEN THE ACTUAL LENGTH OF VALUE
-        String tagmap5 = lengthMap.get(tag5);
-        String val5= resultString.substring(startlen5+4,lenof5+startlen5+4);// mercchant account number
-        int vallen5= tag5.length() +len5.length() + val5.length();
-
-
-
-
-        //handling starting result tag SIX
-        int startlen6 =  vallen5 + startlen5; // 4 BELONGS TO MASTERS
+        int startlen6 =  vallen5+ startlen5; // 4 BELONGS TO MASTERS
         String tag6 = resultString.substring(startlen6, startlen6+2);
         String len6 = resultString.substring(startlen6+2,startlen6+4);
-        int lenof6 = Integer.parseInt(len6)      ; // THE LENGTH OF VALUE IS 2 CHAR LESS THEN THE ACTUAL LENGTH OF VALUE
+        int lenof6 = Integer.parseInt(len6)  /*  +2 */ ; // THE LENGTH OF VALUE IS 2 CHAR LESS THEN THE ACTUAL LENGTH OF VALUE
         String tagmap6 = lengthMap.get(tag6);
         String val6= resultString.substring(startlen6+4,lenof6+startlen6+4);// mercchant account number
         int vallen6= tag6.length() +len6.length() + val6.length();
@@ -166,17 +140,51 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
 
 
 
-        /*
+
+        //handling starting result tag 07
+        int startlen7 =  vallen6 + startlen6; // 4 BELONGS TO MASTERS
+        String tag7 = resultString.substring(startlen7, startlen7+2);
+        String len7 = resultString.substring(startlen7+2,startlen7+4);
+        int lenof7 = Integer.parseInt(len7)      ; // THE LENGTH OF VALUE IS 2 CHAR LESS THEN THE ACTUAL LENGTH OF VALUE
+        String tagmap7 = lengthMap.get(tag7);
+        String val7= resultString.substring(startlen7+4,lenof7+startlen7+4);// mercchant account number
+        int vallen7= tag7.length() +len7.length() + val7.length();
 
 
 
 
-        REMOVE THE  *2 AND +2 AND ADD 76 BELOW TO MAKE IT M=WORK WITH OTHER CODE
+        //handling starting result tag 08
+        int startlen8 =  vallen7 + startlen7; // 4 BELONGS TO MASTERS
+        String tag8 = resultString.substring(startlen8, startlen8+2);
+        String len8 = resultString.substring(startlen8+2,startlen8+4);
+        int lenof8 = Integer.parseInt(len8)      ; // THE LENGTH OF VALUE IS 2 CHAR LESS THEN THE ACTUAL LENGTH OF VALUE
+        String tagmap8 = lengthMap.get(tag8);
+        String val8= resultString.substring(startlen8+4,lenof8+startlen8+4);// mercchant account number
+        int vallen8= tag8.length() +len8.length() + val8.length();
+
+
+
+
+        //handling tag 09
+        int startlen9 =  vallen8 + startlen8; // 4 BELONGS TO MASTERS
+        String tag9 = resultString.substring(startlen9, startlen9+2);
+        String len9 = resultString.substring(startlen9+2,startlen9+4);
+        int lenof9 = Integer.parseInt(len9)      ; // THE LENGTH OF VALUE IS 2 CHAR LESS THEN THE ACTUAL LENGTH OF VALUE
+        String tagmap9 = lengthMap.get(tag9);
+        String val9= resultString.substring(startlen9+4,lenof9+startlen9+4);// mercchant account number
+        int vallen9= tag9.length() +len9.length() + val9.length();
+
+
+
+
+
+
+        //REMOVE THE  *2 AND +2 AND ADD 76 BELOW TO MAKE IT M=WORK WITH OTHER CODE
 
 
         //lets now skip the merchant tags and go directly to handle 52
 
-        int startlen52 = startlen4 + vallen4; // 52 IS MCC // 76 chars from string skipped to reach 52
+        int startlen52 = startlen9+ vallen9; // 52 IS MCC // 76 chars from string skipped to reach 52
         String tag52 = resultString.substring(startlen52, startlen52+2);
         String len52= resultString.substring(startlen52+2,startlen52+4);
         int lenof52 = Integer.parseInt(len52);
@@ -250,7 +258,7 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
 
 
 
-*/
+
 
 
 
@@ -269,20 +277,24 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
 
         MainActivity.tvCardText.setText(tag0+ "\nindicates:     "  +tagmap0 +"\nvalue is "+ value0+"\n"+
 
-                                       tag2+ "\n indicates    "+tagmap2 + "\nvalue is : "+val2
-                                       + "\n" + tag3 +"\n indicates  "+ tagmap3 + "\nvalue is : "+val3
+                                       tag1+ "\n indicates    "+tagmap1 + "\nvalue is : "+val1
+                                     //  + "\n" + tag3 +"\n indicates  "+ tagmap3 + "\nvalue is : "+val3
                                         +"\n"+tag4 + "\n indicates    "+tagmap4 +"\n value is : " + val4
                                           +"\n"+tag5 + "\n indicates    "+tagmap5 +"\n value is : " + val5
-                                           +"\n"+tag6 + "\n indicates    "+tagmap6 +"\n value is : " + val6
+                                          +"\n"+tag6 + "\n indicates    "+tagmap6 +"\n value is : " + val6
+
+                       +"\n"+tag7 + "\n indicates    "+tagmap7 +"\n value is : " + val7
+                      +"\n"+tag8 + "\n indicates    "+tagmap8 +"\n value is : " + val8
+                        +"\n"+tag9 + "\n indicates    "+tagmap9 +"\n value is : " + val9
 
 
-            /*    +"\n"+tag52 + "\n indicates  "+tagmap52 + "\n value is : "+val52
+                +"\n"+tag52 + "\n indicates  "+tagmap52 + "\n value is : "+val52
                                        + "\n" + tag53+ "\nindicates  "+tagmap53+"\n value is : "+ val53
                                          + "\n" + tag54+ "\nindicates  "+tagmap54+"\n value is : "+ val54
                                          + "\n" + tag58+ "\nindicates  "+tagmap58+"\n value is : "+ val58
                                         + "\n" + tag59+ "\nindicates  "+tagmap59+"\n value is : "+ val59                                         + "\n" + tag60+ "\nindicates  "+tagmap60+"\n value is : "+ val60
                                             + "\n" + tag63+ "\nindicates  "+tagmap63+"\n value is : "+ val63
-                                            */
+
         ) ;
         onBackPressed();
 
