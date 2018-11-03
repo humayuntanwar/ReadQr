@@ -14,6 +14,24 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
     String TLV;
     public HashMap<String,String> lengthMap= new HashMap<String, String>();
 
+    /*private static  String[] _parentTagsIdentifiers =
+            {
+                    // Merchant Account Information
+                    "02","03", "04", "05", "06", "07","08"," 09, 10,
+                    11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                    21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+                    31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+                    41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+                    51,
+                    // Additional Data Template
+                    62,
+                    // Language Template
+                    64,
+                    // Unreserved Template
+                    80, 81, 82, 83, 84, 85, 86, 87, 88, 89,
+                    90, 91, 92, 93, 94, 95, 96, 97, 98, 99,
+            };
+*/
 
 
     @Override
@@ -48,12 +66,15 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
 
 
 
-        // continue till 51
+        // continue till 51 are merchant tags
 
 
         lengthMap.put("52","MERCHANT CATEGORY CODE");
         lengthMap.put("53","CURRENCY CODE");
         lengthMap.put("54","TRANSACTIONAL AMOUNT");
+
+
+
         lengthMap.put("58","COUNTRY CODE");
         lengthMap.put("59","MERCHANT NAME");
         lengthMap.put("60","MERCHANT CITY");
@@ -91,8 +112,8 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
         length0 = resultString.substring(2,4);
         int lenthof0 = length0.length();
         String tagmap0 = lengthMap.get(tag0);
-        String value = resultString.substring(4,lenthof0 +4);// is either 01 or 02 , type 1 qr or type 2 qr
-        int vallen0 = value.length() + tag0.length() +lenthof0;
+        String value0 = resultString.substring(4,lenthof0 +4);// is either 01 or 02 , type 1 qr or type 2 qr
+        int vallen0 = value0.length() + tag0.length() +length0.length();
 
 
         //handling string result tag 01
@@ -116,6 +137,31 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
         int vallen4 = tag4.length() +len4.length() + val4.length();
 
 
+        //HANDLING MERHCANT CODE STRING PART 1
+
+
+        //handling the merchant string part 00
+        String merchantString = val4;
+        int mslen0 = 0;
+        String tagms0 = merchantString.substring(mslen0, mslen0+2);
+        String lenms0 = merchantString.substring(mslen0+2,mslen0+4);
+        int lenofms0 = Integer.parseInt(lenms0);
+        String tagmapms0 = lengthMap.get(tagms0);
+        String valms0 = merchantString.substring(mslen0+4,lenofms0+mslen0+4);// is either 12 dynamic QR , 11 static QR
+        int vallenms0 = tagms0.length() +lenms0.length() + valms0.length();
+
+        //handling the merchant string part 01
+        int mslen1 = vallenms0;
+        String tagms01 = merchantString.substring(mslen1, mslen1+2);
+        String lenms01 = merchantString.substring(mslen1+2,mslen1+4);
+        int lenofms01 = Integer.parseInt(lenms01);
+        String tagmapms01 = lengthMap.get(tagms01);
+        String valms01 = merchantString.substring(mslen1+4,lenofms01+mslen1+4);// is either 12 dynamic QR , 11 static QR
+        int vallenms01 = tagms01.length() +tagms01.length() + valms01.length();
+
+
+
+
 
 
 
@@ -132,12 +178,43 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
 
 
 
+
+        //HANDLING MERHCANT CODE STRING PART 2
+
+
+        //handling the merchant string part 00
+        String merchantString2 = val5;
+        int ms2len0 = 0;
+        String tagms20 = merchantString2.substring(ms2len0, ms2len0+2);
+        String lenms20 = merchantString2.substring(ms2len0+2,ms2len0+4);
+        int lenofms20 = Integer.parseInt(lenms20);
+        String tagmapms20 = lengthMap.get(tagms20);
+        String valms20 = merchantString2.substring(ms2len0+4,lenofms20+ms2len0+4);// is either 12 dynamic QR , 11 static QR
+        int vallenms20 = tagms20.length() +lenms20.length() + valms20.length();
+
+        //handling the merchant string part 01
+        int ms2len1 = vallenms0;
+        String tagms201 = merchantString2.substring(ms2len1, ms2len1+2);
+        String lenms201 = merchantString2.substring(ms2len1+2,ms2len1+4);
+        int lenofms201 = Integer.parseInt(lenms201) ;
+        String tagmapms201 = lengthMap.get(tagms201);
+        String valms201 = merchantString2.substring(ms2len1+4,lenofms201+ms2len1+4);// is either 12 dynamic QR , 11 static QR
+        int vallenms201 = lenms201.length() +tagms201.length() + valms201.length();
+
+
+
+
+
+
+
+
+/*
         //handling starting result tag 06
         //change all the value onwards to 06..07..08..09
         int startlen6 =  vallen5+ startlen5; // 4 BELONGS TO MASTERS
         String tag6 = resultString.substring(startlen6, startlen6+2);
         String len6 = resultString.substring(startlen6+2,startlen6+4);
-        int lenof6 = Integer.parseInt(len6)  /*  +2 */ ; // THE LENGTH OF VALUE IS 2 CHAR LESS THEN THE ACTUAL LENGTH OF VALUE
+        int lenof6 = Integer.parseInt(len6)  /*  +2 ; // THE LENGTH OF VALUE IS 2 CHAR LESS THEN THE ACTUAL LENGTH OF VALUE
         String tagmap6 = lengthMap.get(tag6);
         String val6= resultString.substring(startlen6+4,lenof6+startlen6+4);// mercchant account number
         int vallen6= tag6.length() +len6.length() + val6.length();
@@ -185,12 +262,15 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
 
 
 
+
         //REMOVE THE  *2 AND +2 AND ADD 76 BELOW TO MAKE IT M=WORK WITH OTHER CODE
 
 
+*/
+
         //lets now skip the merchant tags and go directly to handle 52
 
-        int startlen52 = startlen9+ vallen9; // 52 IS MCC // 76 chars from string skipped to reach 52
+        int startlen52 = startlen5+ vallen5; // 52 IS MCC // 76 chars from string skipped to reach 52
         String tag52 = resultString.substring(startlen52, startlen52+2);
         String len52= resultString.substring(startlen52+2,startlen52+4);
         int lenof52 = Integer.parseInt(len52);
@@ -281,18 +361,28 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
 
 
 
+
         MainActivity.tvCardText.setText(tag0+ "\nindicates:     "  +tagmap0 +"\nvalue is "+ value0+"\n"+
 
                                        tag1+ "\n indicates    "+tagmap1 + "\nvalue is : "+val1
                                      //  + "\n" + tag3 +"\n indicates  "+ tagmap3 + "\nvalue is : "+val3
                                         +"\n"+tag4 + "\n indicates    "+tagmap4 +"\n value is : " + val4
+
+                + "\n\nInternal merchant string"
+                +"\n"+tagms0 + "\n indicates    "+tagmapms0 +"\n value is : " + valms0
+                        +"\n"+tagms01 + "\n indicates    "+tagmapms01 +"\n value is : " + valms01
+
                                           +"\n"+tag5 + "\n indicates    "+tagmap5 +"\n value is : " + val5
-                                          +"\n"+tag6 + "\n indicates    "+tagmap6 +"\n value is : " + val6
+
+                        + "\n\nInternal merchant string"
+                        +"\n"+tagms20 + "\n indicates    "+tagmapms20 +"\n value is : " + valms20
+                        +"\n"+tagms201 + "\n indicates    "+tagmapms201 +"\n value is : " + valms201
+                                  /*        +"\n"+tag6 + "\n indicates    "+tagmap6 +"\n value is : " + val6
 
                        +"\n"+tag7 + "\n indicates    "+tagmap7 +"\n value is : " + val7
                       +"\n"+tag8 + "\n indicates    "+tagmap8 +"\n value is : " + val8
                         +"\n"+tag9 + "\n indicates    "+tagmap9 +"\n value is : " + val9
-
+*/
 
                 +"\n"+tag52 + "\n indicates  "+tagmap52 + "\n value is : "+val52
                                        + "\n" + tag53+ "\nindicates  "+tagmap53+"\n value is : "+ val53
