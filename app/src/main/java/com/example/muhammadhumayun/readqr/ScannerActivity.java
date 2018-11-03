@@ -105,62 +105,65 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
         resultString = result.toString(); //this string is the resulting string of scanned QR
         // showData(resultString); // pass the string to show data
 
-        //Handling string result tag 00
-        int startlen0 = 0;
-        tag0 = resultString.substring(startlen0, 2);  //tag first two tag
-        length0 = resultString.substring(2, 4);
-        int lenthof0 = length0.length();
-        String tagmap0 = lengthMap.get(tag0);
-        String value0 = resultString.substring(4, lenthof0 + 4);// is either 01 or 02 , type 1 qr or type 2 qr
-        int vallen0 = value0.length() + tag0.length() + length0.length();
+
+        if (firstTwo(resultString).equals("00")) {
+
+            //Handling string result tag 00
+            int startlen0 = 0;
+            tag0 = resultString.substring(startlen0, 2);  //tag first two tag
+            length0 = resultString.substring(2, 4);
+            int lenthof0 = length0.length();
+            String tagmap0 = lengthMap.get(tag0);
+            String value0 = resultString.substring(4, lenthof0 + 4);// is either 01 or 02 , type 1 qr or type 2 qr
+            int vallen0 = value0.length() + tag0.length() + length0.length();
 
 
-        //handling string result tag 01
-        int startlen1 = vallen0; // 2 BELONGS POINT INITIATION METHOD
-        String tag1 = resultString.substring(startlen1, startlen1 + 2);
-        String len1 = resultString.substring(startlen1 + 2, startlen1 + 4);
-        int lenof1 = len1.length();
-        String tagmap1 = lengthMap.get(tag1);
-        String val1 = resultString.substring(startlen1 + 4, lenof1 + startlen1 + 4);// is either 12 dynamic QR , 11 static QR
-        int vallen1 = tag1.length() + len1.length() + val1.length();
+            //handling string result tag 01
+            int startlen1 = vallen0; // 2 BELONGS POINT INITIATION METHOD
+            String tag1 = resultString.substring(startlen1, startlen1 + 2);
+            String len1 = resultString.substring(startlen1 + 2, startlen1 + 4);
+            int lenof1 = len1.length();
+            String tagmap1 = lengthMap.get(tag1);
+            String val1 = resultString.substring(startlen1 + 4, lenof1 + startlen1 + 4);// is either 12 dynamic QR , 11 static QR
+            int vallen1 = tag1.length() + len1.length() + val1.length();
 
 
-        //handling string result tag 04
-        int startlen4 = startlen1 + vallen1; // 2 BELONGS POINT INITIATION METHOD
-        String tag4 = resultString.substring(startlen4, startlen4 + 2);
-        String len4 = resultString.substring(startlen4 + 2, startlen4 + 4);
-        int lenof4 = Integer.parseInt(len4);
-        String tagmap4 = lengthMap.get(tag4);
-        String val4 = resultString.substring(startlen4 + 4, lenof4 + startlen4 + 4);// belongs to the merchant
-        int vallen4 = tag4.length() + len4.length() + val4.length();
+            //handling string result tag 04
+            int startlen4 = startlen1 + vallen1; // 2 BELONGS POINT INITIATION METHOD
+            String tag4 = resultString.substring(startlen4, startlen4 + 2);
+            String len4 = resultString.substring(startlen4 + 2, startlen4 + 4);
+            int lenof4 = Integer.parseInt(len4);
+            String tagmap4 = lengthMap.get(tag4);
+            String val4 = resultString.substring(startlen4 + 4, lenof4 + startlen4 + 4);// belongs to the merchant
+            int vallen4 = tag4.length() + len4.length() + val4.length();
 
 
-        if (firstTwo(val4).equals("00")) {
+            if (firstTwo(val4).equals("00")) {
 
 
-            //HANDLING MERHCANT CODE STRING PART 1
+                //HANDLING MERHCANT CODE STRING PART 1
 
 
-            //handling the merchant string part 00
-            String merchantString = val4;
-            int mslen0 = 0;
-             tagms0 = merchantString.substring(mslen0, mslen0 + 2);
-             lenms0 = merchantString.substring(mslen0 + 2, mslen0 + 4);
-            int lenofms0 = Integer.parseInt(lenms0);
-            tagmapms0 = lengthMap.get(tagms0);
-             valms0 = merchantString.substring(mslen0 + 4, lenofms0 + mslen0 + 4);// handling part one of the merchant string
-            int vallenms0 = tagms0.length() + lenms0.length() + valms0.length();
+                //handling the merchant string part 00
+                String merchantString = val4;
+                int mslen0 = 0;
+                tagms0 = merchantString.substring(mslen0, mslen0 + 2);
+                lenms0 = merchantString.substring(mslen0 + 2, mslen0 + 4);
+                int lenofms0 = Integer.parseInt(lenms0);
+                tagmapms0 = lengthMap.get(tagms0);
+                valms0 = merchantString.substring(mslen0 + 4, lenofms0 + mslen0 + 4);// handling part one of the merchant string
+                int vallenms0 = tagms0.length() + lenms0.length() + valms0.length();
 
-            //handling the merchant string part 01
-            int mslen1 = vallenms0;
-             tagms01 = merchantString.substring(mslen1, mslen1 + 2);
-             lenms01 = merchantString.substring(mslen1 + 2, mslen1 + 4);
-            int lenofms01 = Integer.parseInt(lenms01);
-             tagmapms01 = lengthMap.get(tagms01);
-             valms01 = merchantString.substring(mslen1 + 4, lenofms01 + mslen1 + 4);// handling part two of merchant string
-            int vallenms01 = tagms01.length() + tagms01.length() + valms01.length();
+                //handling the merchant string part 01
+                int mslen1 = vallenms0;
+                tagms01 = merchantString.substring(mslen1, mslen1 + 2);
+                lenms01 = merchantString.substring(mslen1 + 2, mslen1 + 4);
+                int lenofms01 = Integer.parseInt(lenms01);
+                tagmapms01 = lengthMap.get(tagms01);
+                valms01 = merchantString.substring(mslen1 + 4, lenofms01 + mslen1 + 4);// handling part two of merchant string
+                int vallenms01 = tagms01.length() + tagms01.length() + valms01.length();
 
-        }
+            }
 
 
             //handling starting result tag 05
@@ -174,33 +177,31 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
             // String view = tag3+val3+len3;
 
 
-
             //HANDLING MERHCANT CODE STRING PART 2
-        if (firstTwo(val5).equals("00")) {
+            if (firstTwo(val5).equals("00")) {
 
 
-            //handling the merchant string part 00
-            String merchantString2 = val5;
-            int ms2len0 = 0;
-             tagms20 = merchantString2.substring(ms2len0, ms2len0 + 2);
-             lenms20 = merchantString2.substring(ms2len0 + 2, ms2len0 + 4);
-            int lenofms20 = Integer.parseInt(lenms20);
-             tagmapms20 = lengthMap.get(tagms20);
-             valms20 = merchantString2.substring(ms2len0 + 4, lenofms20 + ms2len0 + 4);// handling part one of the merchant string
-            int vallenms20 = tagms20.length() + lenms20.length() + valms20.length();
+                //handling the merchant string part 00
+                String merchantString2 = val5;
+                int ms2len0 = 0;
+                tagms20 = merchantString2.substring(ms2len0, ms2len0 + 2);
+                lenms20 = merchantString2.substring(ms2len0 + 2, ms2len0 + 4);
+                int lenofms20 = Integer.parseInt(lenms20);
+                tagmapms20 = lengthMap.get(tagms20);
+                valms20 = merchantString2.substring(ms2len0 + 4, lenofms20 + ms2len0 + 4);// handling part one of the merchant string
+                int vallenms20 = tagms20.length() + lenms20.length() + valms20.length();
 
-            //handling the merchant string part 01
-            int ms2len1 = vallenms20;
-             tagms201 = merchantString2.substring(ms2len1, ms2len1 + 2);
-             lenms201 = merchantString2.substring(ms2len1 + 2, ms2len1 + 4);
-            int lenofms201 = Integer.parseInt(lenms201);
-             tagmapms201 = lengthMap.get(tagms201);
-             valms201 = merchantString2.substring(ms2len1 + 4, lenofms201 + ms2len1 + 4);// handling part two of the merchant string
-            int vallenms201 = lenms201.length() + tagms201.length() + valms201.length();
+                //handling the merchant string part 01
+                int ms2len1 = vallenms20;
+                tagms201 = merchantString2.substring(ms2len1, ms2len1 + 2);
+                lenms201 = merchantString2.substring(ms2len1 + 2, ms2len1 + 4);
+                int lenofms201 = Integer.parseInt(lenms201);
+                tagmapms201 = lengthMap.get(tagms201);
+                valms201 = merchantString2.substring(ms2len1 + 4, lenofms201 + ms2len1 + 4);// handling part two of the merchant string
+                int vallenms201 = lenms201.length() + tagms201.length() + valms201.length();
 
 
-        }
-
+            }
 
 
             //handling starting result tag 06
@@ -336,11 +337,11 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
                     + "\n\nInternal merchant string"
                     + "\n" + tagms20 + "\n indicates    " + tagmapms20 + "\n value is : " + valms20
                     + "\n" + tagms201 + "\n indicates    " + tagmapms201 + "\n value is : " + valms201
-                +"\n"+tag6 + "\n indicates    "+tagmap6 +"\n value is : " + val6
+                    + "\n" + tag6 + "\n indicates    " + tagmap6 + "\n value is : " + val6
 
-                       +"\n"+tag7 + "\n indicates    "+tagmap7 +"\n value is : " + val7
-                      +"\n"+tag8 + "\n indicates    "+tagmap8 +"\n value is : " + val8
-                        +"\n"+tag9 + "\n indicates    "+tagmap9 +"\n value is : " + val9
+                    + "\n" + tag7 + "\n indicates    " + tagmap7 + "\n value is : " + val7
+                    + "\n" + tag8 + "\n indicates    " + tagmap8 + "\n value is : " + val8
+                    + "\n" + tag9 + "\n indicates    " + tagmap9 + "\n value is : " + val9
 
 
                     + "\n" + tag52 + "\n indicates  " + tagmap52 + "\n value is : " + val52
@@ -354,8 +355,18 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
             );
             onBackPressed();
 
-
         }
+
+        else {
+
+
+            MainActivity.tvCardText.setText(resultString);
+            onBackPressed();
+        }
+    }
+
+
+
 
 
 
