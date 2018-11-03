@@ -29,16 +29,22 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
         /*
         02 to 51 Merchant Account Information
          */
-        lengthMap.put("02","MERCHANTIDENTIFIERVISA");
-        lengthMap.put("03","MERCHANTIDENTIFIERVISA");
+        lengthMap.put("02","MERCHANT IDENTIFIER VISA");
+        lengthMap.put("03","MERCHANT IDENTIFIER VISA");
         lengthMap.put("04","MERCHANT IDENTIFIER MASTER CARD");
         lengthMap.put("05","MERCHANT IDENTIFIER MASTER CARD");
-        lengthMap.put("06","MERCHANTIDENTIFIER NPCI");
-        lengthMap.put("07","MERCHANTIDENTIFIER NPCI");
-        lengthMap.put("08","Reserved by EMVCo");
-        lengthMap.put("09","Reserved for Discover");
-        lengthMap.put("26","PAY PAK REGISTERED");
-        lengthMap.put("27","PAY PAK REGISTERED");
+        lengthMap.put("06","MERCHANT IDENTIFIER EMVCo");
+        lengthMap.put("07","MERCHANT IDENTIFIER EMVCo");
+        lengthMap.put("08","MERCHANT IDENTIFIER EMVCo");
+        lengthMap.put("09","MERCHANT IDENTIFIER Discover");
+        lengthMap.put("15","MERCHANT IDENTIFIER UnionPay");
+        lengthMap.put("16","MERCHANT IDENTIFIER UnionPay ");
+
+
+
+
+        lengthMap.put("26"," MERCHANT IDENTIFIER Pay Pak ");
+        lengthMap.put("27"," MERCHANT IDENTIFIER Pay Pak ");
 
 
 
@@ -145,7 +151,7 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
         int startlen7 =  vallen6 + startlen6; // 4 BELONGS TO MASTERS
         String tag7 = resultString.substring(startlen7, startlen7+2);
         String len7 = resultString.substring(startlen7+2,startlen7+4);
-        int lenof7 = Integer.parseInt(len7)      ; // THE LENGTH OF VALUE IS 2 CHAR LESS THEN THE ACTUAL LENGTH OF VALUE
+        int lenof7 = Integer.parseInt(len7)       ; // THE LENGTH OF VALUE IS 2 CHAR LESS THEN THE ACTUAL LENGTH OF VALUE
         String tagmap7 = lengthMap.get(tag7);
         String val7= resultString.substring(startlen7+4,lenof7+startlen7+4);// mercchant account number
         int vallen7= tag7.length() +len7.length() + val7.length();
