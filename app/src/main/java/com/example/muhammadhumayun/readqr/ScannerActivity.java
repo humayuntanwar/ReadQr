@@ -180,7 +180,16 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
 
             value = str.substring(4, lengthnum+ 4); //value
 
-                    if(firstTwo(value).equals("00")){
+            try {
+                tagm = emvQrMap.get(tag);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+            MainActivity.tvCardText.append(tag + "\nindicates:     " + tagm + "\nvalue is " + value+ "\n");
+
+
+            if(firstTwo(value).equals("00")){
                         readEMVQR(value);
                     }
                     else if(firstTwo(value).equals("03"))
@@ -195,14 +204,6 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
 
 
             //call the hashmap here
-
-            try {
-                tagm = emvQrMap.get(tag);
-            }
-            catch (Exception e){
-                e.printStackTrace();
-            }
-            MainActivity.tvCardText.append(tag + "\nindicates:     " + tagm + "\nvalue is " + value+ "\n");
 
 
              TLV = tag+length+value;
