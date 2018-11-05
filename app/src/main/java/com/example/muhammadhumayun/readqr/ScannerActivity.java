@@ -21,6 +21,11 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
     String merchantString2;
     String merchantString;
 
+
+
+    /*
+    this hashmap is used to map each tag value we get from our QR string to the official defination of the tag from EMVCO
+     */
     public HashMap<String, String> emvQrMap = new HashMap<String, String>();
 
     /*private static  String[] _parentTagsIdentifiers =
@@ -49,6 +54,7 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
         mScannerView = new ZXingScannerView(this);   // Programmatically initialize the scanner view
         setContentView(mScannerView); //set to scanner cam view
 
+        //00, 01 mandatory
         emvQrMap.put("00", "PAYLOAD FORMAT INDICATOR");
         emvQrMap.put("01", "POINT INITIATION METHOD");
         
@@ -76,6 +82,7 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
         // continue till 51 are merchant tags
 
 
+        //mandatory and / or conditional
         emvQrMap.put("52", "MERCHANT CATEGORY CODE");
         emvQrMap.put("53", "CURRENCY CODE");
         emvQrMap.put("54", "TRANSACTIONAL AMOUNT");
@@ -111,13 +118,18 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
         // showData(resultString); // pass the string to show data
 
 
+        /*
+       check if QR is emv or not
+         */
         if (firstTwo(resultString).equals("00")) {
+            //IS EMV
             readEMVQR(resultString);
             onBackPressed();
 
         }
 
         else {
+            //NOT EMV
             MainActivity.tvCardText.setText(resultString);
             onBackPressed();
         }
@@ -129,24 +141,34 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
 
 
 
+    /*
+    this method returns the first two characters of any string
+     */
     public String firstTwo(String str) {
         return str.length() < 2 ? str : str.substring(0, 2);
     }
 
 
+    /*
+    this method reads the EMVCO standard merchant QR
+     */
     public void readEMVQR(String str){
         //Handling string result tag 00
-        int lengthnum = 0,lengthnumms=0;
-        String tagm = "";
+        int lengthnum = 0;//initial length
+        String tagm = ""; //tag map
+        String value,TLV;// value and tag,vale,length combined
+        /*
+        while loop to get tag, length, value until we reach end of string
+         */
         while (str.length() >0){
           String  tag = str.substring(0, 2);  //tag first two tag
           String  length = str.substring(2, 4); // length // next two length
-             String value,TLV;
 
-
+            /*
+            check the length characters and let the length var accordingly
+             */
                     if (length.equals("02")){
-                     lengthnum = length.length();
-                     Log.d("tagnuml", String.valueOf(lengthnum));
+                     lengthnum = 2;
                     }
                     else if(length.equals("03"))
                     {
@@ -177,18 +199,19 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
                         lengthnum = Integer.parseInt(length);
                     }
 
-
-            value = str.substring(4, lengthnum+ 4); //value
+            value = str.substring(4, lengthnum+ 4); //value string
 
             try {
-                tagm = emvQrMap.get(tag);
+                tagm = emvQrMap.get(tag); //get the emv representation of tag
             }
             catch (Exception e){
                 e.printStackTrace();
             }
-            MainActivity.tvCardText.append(tag + "\nindicates:     " + tagm + "\nvalue is " + value+ "\n");
+            MainActivity.tvCardText.append(tag + "\nindicates:     " + tagm + "\nvalue is " + value+ "\n"); //append to textview
 
-
+            /*
+            check first two chars of the value string and if they are any of the below call the function again
+             */
             if(firstTwo(value).equals("00")){
                         readEMVQR(value);
                     }
@@ -201,18 +224,12 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
                     else if(firstTwo(value).equals("09"))
                     { readEMVQR(value); }
 
-
-
-            //call the hashmap here
-
-
-             TLV = tag+length+value;
-            str = str.substring(TLV.length(), str.length());
+            TLV = tag+length+value;//combine t + l + v
+            str = str.substring(TLV.length(), str.length());//remove the constructed tlv from the main string //while loop condition handling
             Log.d("tag " , tag);
             //Log.d("tagmap " , tagm);
             Log.d("taglen", length);
             Log.d("tagval ", value);
-
         }
 
 
