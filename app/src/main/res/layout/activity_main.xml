@@ -33,6 +33,8 @@
         android:text="Start scan"
         android:layout_below="@+id/tv_code_text"
         />
+
+
         </LinearLayout>
 
     </ScrollView>
