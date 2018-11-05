@@ -2,6 +2,8 @@ package com.example.muhammadhumayun.readqr;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+
 import com.google.zxing.Result;
 
 import java.util.HashMap;
@@ -134,6 +136,88 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
 
     public void readEMVQR(String str){
         //Handling string result tag 00
+        int lengthnum = 0,lengthnumms=0;
+        String tagm = "";
+        while (str.length() >0){
+          String  tag = str.substring(0, 2);  //tag first two tag
+          String  length = str.substring(2, 4); // length // next two length
+             String value,TLV;
+
+
+                    if (length.equals("02")){
+                     lengthnum = length.length();
+                     Log.d("tagnuml", String.valueOf(lengthnum));
+                    }
+                    else if(length.equals("03"))
+                    {
+                        lengthnum = 3;
+                    }
+                    else if (length.equals("04"))
+                    {
+                        lengthnum = 4;
+                    }
+                    else  if (length.equals("05"))
+                    {
+                        lengthnum=5;
+                    }
+                    else if(length.equals("06"))
+                    {
+                        lengthnum = 6;
+                    }
+                    else if (length.equals("07"))
+                    {
+                        lengthnum = 7;
+                    }
+                    else  if (length.equals("08"))
+                    {
+                        lengthnum=8;
+                    }
+                    else {
+
+                        lengthnum = Integer.parseInt(length);
+                    }
+
+
+            value = str.substring(4, lengthnum+ 4); //value
+
+                    if(firstTwo(value).equals("00")){
+                        readEMVQR(value);
+                    }
+                    else if(firstTwo(value).equals("03"))
+                    { readEMVQR(value); }
+                    else if(firstTwo(value).equals("06"))
+                    { readEMVQR(value); }
+                    else if(firstTwo(value).equals("07"))
+                    { readEMVQR(value); }
+                    else if(firstTwo(value).equals("09"))
+                    { readEMVQR(value); }
+
+
+
+            //call the hashmap here
+
+            try {
+                tagm = emvQrMap.get(tag);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+            MainActivity.tvCardText.append(tag + "\nindicates:     " + tagm + "\nvalue is " + value+ "\n");
+
+
+             TLV = tag+length+value;
+            str = str.substring(TLV.length(), str.length());
+            Log.d("tag " , tag);
+            //Log.d("tagmap " , tagm);
+            Log.d("taglen", length);
+            Log.d("tagval ", value);
+
+        }
+
+
+/*
+
+
         int startlenPFI = 0;
         tagPFI = resultString.substring(startlenPFI, 2);  //tag first two tag
         lengthPFI = resultString.substring(2, 4);
@@ -199,7 +283,9 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
         int startlen5 = startlen4 + vallen4; // BELONGS TO Merchant
         String tag5 = resultString.substring(startlen5, startlen5 + 2);
         String len5 = resultString.substring(startlen5 + 2, startlen5 + 4);
-        int lenof5 = Integer.parseInt(len5)     /*      *2 */; //THE LENGTH OF VALUE IS 2 TIMES THE GIVEN LENGTH, ERROR IN THE 1LINK CODE
+        int lenof5 = Integer.parseInt(len5)     */
+/*      *2 *//*
+; //THE LENGTH OF VALUE IS 2 TIMES THE GIVEN LENGTH, ERROR IN THE 1LINK CODE
         String tagmap5 = emvQrMap.get(tag5);
         String val5 = resultString.substring(startlen5 + 4, lenof5 + startlen5 + 4);// merchant code string 2
         int vallen5 = tag5.length() + len5.length() + val5.length();
@@ -239,7 +325,9 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
         int startlen6 = vallen5 + startlen5; // 4 BELONGS TO MASTERS
         String tag6 = resultString.substring(startlen6, startlen6 + 2);
         String len6 = resultString.substring(startlen6 + 2, startlen6 + 4);
-        int lenof6 = Integer.parseInt(len6)  /*  +2  */; // THE LENGTH OF VALUE IS 2 CHAR LESS THEN THE ACTUAL LENGTH OF VALUE
+        int lenof6 = Integer.parseInt(len6)  */
+/*  +2  *//*
+; // THE LENGTH OF VALUE IS 2 CHAR LESS THEN THE ACTUAL LENGTH OF VALUE
         String tagmap6 = emvQrMap.get(tag6);
         String val6 = resultString.substring(startlen6 + 4, lenof6 + startlen6 + 4);// mercchant account number
         int vallen6 = tag6.length() + len6.length() + val6.length();
@@ -385,6 +473,7 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
                 + "\n" + tag63 + "\nindicates  " + tagmap63 + "\n value is : " + val63
 
         );
+*/
 
     }
     public void readMerchantString(){
