@@ -118,7 +118,7 @@ public class emvQRReader {
             catch (Exception e){
                 e.printStackTrace();
             }
-            MainActivity.tvCardText.append(tag + "\nindicates:     " + tagm + "\nvalue is " + value+ "\n"); //append to textview
+            MainActivity.tvCardText.append(tag + "   indicates:  " + tagm + "\n        value is: " + value+ "\n\n"); //append to textview
 
             /*
             check first two chars of the value string and if they are any of the below call the function again
